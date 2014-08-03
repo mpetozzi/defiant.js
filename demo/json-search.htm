@@ -79,6 +79,51 @@ pre {
 
 <script type="text/javascript">
 
+
+Object.defineProperties( String.prototype, {
+	"nodeName": {
+		get: function() {
+			return this.twin;
+		}
+	},
+	"twin": {
+		get: function() {
+			return this.value;
+		},
+		set: function(node) {
+			this.value = node;
+		}
+	}
+});
+
+Object.defineProperties( Object.prototype, {
+	"ancestorNode": {
+		get: function() {
+			return 'root';
+		}
+	},
+	"parentNode": {
+		get: function() {
+			var matchIndex = this.twin.parentNode.getAttribute('d:mi');
+			return matchIndex;
+		}
+	},
+	"nodeName": {
+		get: function() {
+			return this.twin.nodeName;
+		}
+	},
+	"twin": {
+		get: function() {
+			return this.value;
+		},
+		set: function(node) {
+			this.value = node;
+		}
+	}
+});
+
+
 // development flag
 Defiant.env = 'development';
 
@@ -113,23 +158,21 @@ var json = [
 		{"test": "123"}
 	],
 */
-/*
+/**/
 var json = {"test": [
 	{
 		"id": "0002",
 		"type": "donut",
-		"name": "Raised",
 		"ppu": 0.55
 	},
 	{
 		"id": "0003",
 		"type": "donut",
-	//	"name": "Old Fashioned",
-		"ppu": 0.55
+		"ppu": 0.52
 	}
 ]},
-*/
-/**/
+
+/*
 var json = [
 		[
 			{
@@ -142,7 +185,7 @@ var json = [
 		"13881572356888224",
 		"d5f06780-30a8-4a48-a2f8-7ed181b4a13f"
 	],
-	json_str = JSON.stringify( json, null, '\t' )
+*/	json_str = JSON.stringify( json, null, '\t' )
 	, doc    = JSON.toXML(json)
 	, j2     = Defiant.node.toJSON(doc)
 	, res;
@@ -156,8 +199,11 @@ jEl.innerHTML  = json_str.replace(/\t/g, String().fill(Defiant.tabsize));
 
 
 
-res = JSON.search(json, '//*[contains(op, "priv")]');
-console.log( 'RES', res );
+res = JSON.search(json, '//*[type="donut"]/id');
+//console.log( 'RES', res );
+//console.log( res );
+console.log( res[0].twin );
+//console.log( res[1].parentNode );
 
 </script>
 
