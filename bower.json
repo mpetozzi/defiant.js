@@ -1,0 +1,9 @@
+{
+   "name": "defiant.js",
+   "version": "1.1.0",
+   "description": "defiant.js Bower package",
+   "main": "defiant.js",
+   "keywords": [
+     "defiant.js"
+   ]
+ }
